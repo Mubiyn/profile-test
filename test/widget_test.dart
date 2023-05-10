@@ -1,30 +1,37 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:profile_test/main.dart';
+import 'package:profile_test/screens/screens.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Profile screen should display all widgets',
+      (WidgetTester tester) async {
+    // Build the widget tree
+    await tester.pumpWidget(ScreenUtilInit(
+        designSize: const Size(390, 812),
+        builder: (BuildContext context, Widget? child) {
+          return const MaterialApp(home: ProfileScreen());
+        }));
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Find all the widgets displayed in the ProfileScreen
+    final appBarTitle = find.text('View Profile');
+    final profileHeader = find.byType(ProfileHeader);
+    final lastSeenWidget = find.byType(LastSeenWidget);
+    final summaryWidget = find.byType(SummaryWidget);
+    final workExperienceWidget = find.byType(WorkExperienceWidget);
+    final profileSkillWidget = find.byType(ProfileSkillWidget);
+    final portfolioWidget = find.byType(PortfolioWidget);
+    final reviewWidget = find.byType(ReviewWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Check that all the widgets are displayed
+    expect(appBarTitle, findsOneWidget);
+    expect(profileHeader, findsOneWidget);
+    expect(lastSeenWidget, findsOneWidget);
+    expect(summaryWidget, findsOneWidget);
+    expect(workExperienceWidget, findsOneWidget);
+    expect(profileSkillWidget, findsOneWidget);
+    expect(portfolioWidget, findsOneWidget);
+    expect(reviewWidget, findsOneWidget);
   });
 }
